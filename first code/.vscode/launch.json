@@ -1,0 +1,11 @@
+{
+    "files.autoSave": "onFocusChange",
+    "remote.SSH.remotePlatform": {
+        "192.168.1.100": "linux",
+        "192.168.1.105": "linux"
+    },
+    "remote.SSH.useLocalServer": false,
+    "liveServer.settings.donotShowInfoMsg": true,
+    "C_Cpp.default.compilerPath": "C:/mingw64/bin/gcc.exe",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+}
