@@ -1,12 +1,5 @@
 #include <stdio.h>
 #include <windows.h>
-
-/*project 2 — Traffic Light Simulation (Logic Only)
-🧠 Objective
-
-Simulate a traffic light switching between red, yellow, and green lights automatically or based on user control.
-*/
-
 int main(){
 char variable;
 printf("Do you want to start or Quit the stimulation: ");
