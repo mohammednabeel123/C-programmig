@@ -1,13 +1,16 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int main () {
-    int first,second;
-    int result;
-    printf("Enter your first number: ");
-    scanf("%d",&first);
-    printf("Enter your second number: ");
-    scanf("%d",&second);
-    result = first + second;
-    printf("The sum of %d and %d is %d\n",first,second,result);
-    return 0;
+int main()
+{
+double height, width;
+printf("Enter the height of the rectangle: ");
+scanf("%lf", &height);
+printf("Enter the width of the rectangle: ");
+scanf("%lf", &width);
+
+double perimeter = height * width;
+printf("The perimeter of the rectangle is: %.2lf\n", perimeter);
+
+return 0;
 }
