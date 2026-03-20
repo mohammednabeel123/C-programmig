@@ -1,164 +1,158 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-/* ---------- QUESTION 1 FUNCTION ---------- */
-
-void classifyNumber(int n)
-{
-    if (n % 2 == 0)
-        printf("The number is Even\n");
-    else
-        printf("The number is Odd\n");
-
-    if (n <= 1)
-    {
-        printf("The number is NOT prime\n");
-        return;
-    }
-
-    int isPrime = 1;
-
-    for (int i = 2; i <= n / 2; i++)
-    {
-        if (n % i == 0)
-        {
-            isPrime = 0;
-            break;
-        }
-    }
-
-    if (isPrime)
-        printf("The number is Prime\n");
-    else
-        printf("The number is NOT Prime\n");
-}
+#define ROLLS 10000
 
 
-/* ---------- QUESTION 2 FUNCTIONS ---------- */
+int roll_die();
+void simulate_one_die();
+void simulate_two_dice();
+void print_graph(int freq[], int size, int start_value);
 
-float add(float a, float b)
-{
-    return a + b;
-}
-
-float subtract(float a, float b)
-{
-    return a - b;
-}
-
-float multiply(float a, float b)
-{
-    return a * b;
-}
-
-float divide(float a, float b)
-{
-    if (b == 0)
-    {
-        printf("Error: Division by zero\n");
-        return 0;
-    }
-    return a / b;
-}
+// Sorting algorithms
+void bubble_sort(int arr[], int n);
+void selection_sort(int arr[], int n);
+void insertion_sort(int arr[], int n);
+void print_array(int arr[], int n);
 
 
-/* ---------- QUESTION 3 FUNCTION ---------- */
+int main() {
+    srand(time(NULL)); 
 
-void analyzeDigits(int n)
-{
-    int digits = 0;
-    int sum = 0;
-    int original = n;
-    int reversed = 0;
+    printf("----- QUESTION 1: CENTRAL LIMIT THEOREM -----\n\n");
 
-    while (n != 0)
-    {
-        int digit = n % 10;
+    simulate_one_die();
+    simulate_two_dice();
 
-        digits++;
-        sum += digit;
+    printf("\n----- QUESTION 2: SORTING ALGORITHMS -----\n\n");
 
-        reversed = reversed * 10 + digit;
+    int arr[] = {9, 3, 5, 1, 8, 2};
+    int n = sizeof(arr) / sizeof(arr[0]);
 
-        n = n / 10;
-    }
+    printf("Original Array: ");
+    print_array(arr, n);
 
-    printf("Number of digits: %d\n", digits);
-    printf("Sum of digits: %d\n", sum);
+    // Bubble Sort
+    int arr1[6] = {9, 3, 5, 1, 8, 2};
+    bubble_sort(arr1, n);
+    printf("Bubble Sort: ");
+    print_array(arr1, n);
 
-    if (original == reversed)
-        printf("The number is a palindrome\n");
-    else
-        printf("The number is NOT a palindrome\n");
-}
+    // Selection Sort
+    int arr2[6] = {9, 3, 5, 1, 8, 2};
+    selection_sort(arr2, n);
+    printf("Selection Sort: ");
+    print_array(arr2, n);
 
-
-/* ---------- MAIN PROGRAM ---------- */
-
-int main()
-{
-    int number;
-    int choice;
-    float num1, num2;
-
-    /* QUESTION 1 */
-
-    printf("Enter a positive integer: ");
-    scanf("%d", &number);
-
-    classifyNumber(number);
-
-
-    /* QUESTION 2 */
-
-    printf("\nCalculator Menu\n");
-    printf("1. Addition\n");
-    printf("2. Subtraction\n");
-    printf("3. Multiplication\n");
-    printf("4. Division\n");
-    printf("5. Exit\n");
-
-    printf("Select an option: ");
-    scanf("%d", &choice);
-
-    if (choice >= 1 && choice <= 4)
-    {
-        printf("Enter two numbers: ");
-        scanf("%f %f", &num1, &num2);
-    }
-
-    switch (choice)
-    {
-        case 1:
-            printf("Result: %.2f\n", add(num1, num2));
-            break;
-
-        case 2:
-            printf("Result: %.2f\n", subtract(num1, num2));
-            break;
-
-        case 3:
-            printf("Result: %.2f\n", multiply(num1, num2));
-            break;
-
-        case 4:
-            printf("Result: %.2f\n", divide(num1, num2));
-            break;
-
-        case 5:
-            printf("Exiting program...\n");
-            break;
-
-        default:
-            printf("Invalid option\n");
-    }
-
-
-    /* QUESTION 3 */
-
-    printf("\nEnter an integer for digit analysis: ");
-    scanf("%d", &number);
-
-    analyzeDigits(number);
+    // Insertion Sort
+    int arr3[6] = {9, 3, 5, 1, 8, 2};
+    insertion_sort(arr3, n);
+    printf("Insertion Sort: ");
+    print_array(arr3, n);
 
     return 0;
+}
+
+
+int roll_die() {
+    return (rand() % 6) + 1;
+}
+
+
+void simulate_one_die() {
+    int freq[6] = {0};
+
+    for (int i = 0; i < ROLLS; i++) {
+        int r = roll_die();
+        freq[r - 1]++;
+    }
+
+    printf("One Die Distribution:\n");
+    print_graph(freq, 6, 1);
+}
+
+
+void simulate_two_dice() {
+    int freq[11] = {0};
+
+    for (int i = 0; i < ROLLS; i++) {
+        int sum = roll_die() + roll_die();
+        freq[sum - 2]++;
+    }
+
+    printf("\nTwo Dice Distribution (CLT Demonstration):\n");
+    print_graph(freq, 11, 2);
+}
+
+
+void print_graph(int freq[], int size, int start_value) {
+    int scale = 100; // adjust for nice display
+
+    for (int i = 0; i < size; i++) {
+        printf("%2d: ", i + start_value);
+
+        int stars = freq[i] / scale;
+
+        for (int j = 0; j < stars; j++) {
+            printf("*");
+        }
+
+        printf("\n");
+    }
+}
+
+
+
+// Bubble Sort
+void bubble_sort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+// Selection Sort
+void selection_sort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int min = i;
+
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[min]) {
+                min = j;
+            }
+        }
+
+        int temp = arr[i];
+        arr[i] = arr[min];
+        arr[min] = temp;
+    }
+}
+
+// Insertion Sort
+void insertion_sort(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+
+        arr[j + 1] = key;
+    }
+}
+
+
+void print_array(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
 }
