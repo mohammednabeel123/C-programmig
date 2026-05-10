@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+#define SIZE 10
+int main()
+{
+    int i,j;
+int mat[SIZE][SIZE];
+
+for (i= 1; i<SIZE;i++){
+    for(j=1; j < SIZE; j++){
+        mat[i][j] = i * j;
+        printf("%5d ", mat[i][j]);
+    }
+    printf("\n");
+}
+return 0;
+
+}
